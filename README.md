@@ -1,7 +1,7 @@
 # nd2_to_dax
 This repository is intended to complete batch conversions of nd2 files to dax files for STORM image analysis (adapted from HazenBabcock at Zhaung Lab). This converter is intended to convert directly from nd2 to dax without the step of converting to tif. 
 
-##Instructions for use##
+## Instructions for use
 
 Before getting started with the file conversion, ensure that all files in the nd2_to_dax_converter are downloaded and unzipped. To ensure that no errors occur during processing, folders should be set up according to the following:
 
