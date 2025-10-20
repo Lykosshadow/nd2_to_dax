@@ -1,5 +1,5 @@
 # nd2_to_dax
-This repository is intended to complete batch conversions of nd2 files to dax files for STORM image analysis (adapted from HazenBabcock at Zhaung Lab). This converter is intended to convert directly from nd2 to dax without the step of converting to tif. 
+This repository is intended to complete batch conversions of nd2 files to dax files for STORM image analysis (adapted from HazenBabcock at Zhaung Lab). This converter is intended to convert directly from nd2 to dax without the step of converting to tif. Utilizing the shape data of the acquired images, we can convert directly from the nd2 data files to the dax files thereby saving processing time. 
 
 ## Instructions for use
 Before getting started with the file conversion, ensure that all files in the nd2_to_dax_converter are downloaded and unzipped. To ensure that no errors occur during processing, folders should be set up according to the following:
@@ -10,7 +10,6 @@ Before getting started with the file conversion, ensure that all files in the nd
     - converter.py  
   - **input_data/** — folder containing ND2 files  
   - **output_data/**
-    - **tiff_files/** — TIFF output files  
     - **dax_files/** — DAX output files
 
 **Create the Input and Output data folders but DO NOT add any files into the Output folder**
