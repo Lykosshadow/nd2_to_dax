@@ -15,8 +15,7 @@ def convert_nd2_to_dax(nd2_path, dax_path):
         with nd2.ND2File(nd2_path) as f:
             print("ND2 shape:", f.shape)
             print("ND2 sizes:", f.sizes)
-            print("ND2 axes:", f.axes)
-
+            
             dask_array = f.to_dask()
             shape = dask_array.shape
 
