@@ -4,8 +4,9 @@ import sys
 import os
 import nd2
 import dask.array as da
+from tqdm import trange
 
-def convert_nd2_to_dax(nd2_path, dax_path):
+def convert_nd2_to_dax(nd2_path, dax_path,batch_size=100):
     print(f"\nConverting ND2 to DAX: {nd2_path} → {dax_path}")
                 
     try:
@@ -45,13 +46,14 @@ def convert_nd2_to_dax(nd2_path, dax_path):
             print(f"Pixel dtype: {dask_array.dtype}")
             dax_file = DaxWriter(dax_path, width=width, height=height)
 
-            for i in range(num_frames):
-                print(f"Writing frame {i + 1}/{num_frames}...")
+            for i in trange(0, num_frames, batch_size, desc="Converting frames"):
+                end = min(i + batch_size, num_frames)
                 try:
-                    frame = dask_array[i].compute()
-                    dax_file.addFrame(frame.astype(np.uint16))  # Ensure compatible dtype
-                except Exception as frame_error:
-                    print(f"Error writing frame {i}: {frame_error}")
+                    batch = dask_array[i:end].compute()  # shape: (B, H, W)
+                    for frame in batch:
+                        dax_file.addFrame(frame.astype(np.uint16))
+                except Exception as e:
+                    print(f"Error processing frames {i}–{end}: {e}")
                     dax_file.close()
                     return False
 
