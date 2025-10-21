@@ -6,7 +6,9 @@ import nd2
 import dask.array as da
 from tqdm import trange
 
-def convert_nd2_to_dax(nd2_path, dax_path,batch_size=100):
+DEFAULT_BATCH_SIZE = 100
+
+def convert_nd2_to_dax(nd2_path, dax_path,batch_size=DEFAULT_BATCH_SIZE):
     print(f"\nConverting ND2 to DAX: {nd2_path} → {dax_path}")
                 
     try:
@@ -83,7 +85,7 @@ def main(nd2_folder, output_folder):
     for nd2_file in nd2_files:
         base_name = os.path.splitext(os.path.basename(nd2_file))[0]
         dax_path = os.path.join(dax_dir, base_name + ".dax")
-        success = convert_nd2_to_dax(nd2_file, dax_path)
+        success = convert_nd2_to_dax(nd2_file, dax_path, batch_size=DEFAULT_BATCH_SIZE)
 
         if not success:
             print(f"Conversion failed for file: {nd2_file}")
