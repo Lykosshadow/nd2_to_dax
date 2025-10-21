@@ -5,6 +5,7 @@ import os
 import nd2
 import dask.array as da
 from tqdm import trange
+import gc
 
 DEFAULT_BATCH_SIZE = 100
 
@@ -49,9 +50,11 @@ def convert_nd2_to_dax(nd2_path, dax_path,batch_size=DEFAULT_BATCH_SIZE):
             for i in trange(0, num_frames, batch_size, desc="Converting frames"):
                 end = min(i + batch_size, num_frames)
                 try:
-                    batch = dask_array[i:end].compute()  # shape: (B, H, W)
+                    batch = dask_array[i:end].compute()
                     for frame in batch:
                         dax_file.addFrame(frame.astype(np.uint16))
+                    del batch  # Remove the batch explicitly
+                    gc.collect()  # Force Python garbage collection
                 except Exception as e:
                     print(f"Error processing frames {i}–{end}: {e}")
                     dax_file.close()
