@@ -16,8 +16,6 @@ def convert_nd2_to_dax(nd2_path, dax_path,batch_size=DEFAULT_BATCH_SIZE):
 
         # Open ND2 file and keep it open during frame access
         with nd2.ND2File(nd2_path) as f:
-            print("ND2 shape:", f.shape)
-            print("ND2 sizes:", f.sizes)
             
             dask_array = f.to_dask()
             shape = dask_array.shape
